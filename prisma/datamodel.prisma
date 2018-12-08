@@ -1,0 +1,32 @@
+type User {
+  id: ID! @unique
+  name: String!
+  email:String! @unique
+  online:Boolean
+  posts:[Post]! @relation(name:"PostToUser", onDelete:CASCADE)
+  comments:[Comment!]! @relation(name:"CommentToUser", onDelete:CASCADE)
+}
+  type Post {
+    id: ID! @unique
+    title: String!
+    content: String
+    excerpt: String
+    slug:String
+    status: String
+    type: String
+    name: String
+    parent: Int
+    date: String
+    menu_order: Int
+    author: User! @relation(name:"PostToUser", onDelete:SET_NULL)
+    published: Boolean!
+    private:Boolean!
+    password:String
+    comments: [Comment!]! @relation(name:"CommentToPost", onDelete:CASCADE)
+  }
+type Comment {
+    id: ID! @unique
+    text: String!
+    author: User! @relation(name:"CommentToUser", onDelete:SET_NULL)
+    post: Post! @relation(name:"CommentToPost", onDelete:SET_NULL)
+}
